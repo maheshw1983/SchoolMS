@@ -25,8 +25,20 @@
                                             <p>
                                                 <a class="btn btn-primary btn-large" href="{{ action('EventController@show',[$event->id]) }}">View Event in Detail</a>
                                             </p>
+
+                                            {{--{{$event->society()->email}}--}}
                                             @if(auth()->user())
-                                                @if(auth()->user()->id == $event->user_id)
+<!--                                                --><?php
+//                                                $socid = \App\Society::where('id' , $event->society_id)->first();
+//                                                $user = \App\User::where('email' , $socid->email)->first();
+//                                                if (!$user){
+//                                                    $user->id = null;
+//                                                    $user->id = 1;
+//                                                }
+
+                                                ?>
+{{--                                                @if(auth()->user()->id == $event->user_id ||  auth()->user()->id == $user->id )--}}
+                                                    @if(auth()->user()->id == $event->user_id)
                                                     <div class="btn-group-lg">
                                                         <button class="btn btn-outline-dark " style="width: 40%" type="submit"><a href="{{ action('EventController@edit',[$event->id]) }}">Edit Event</a> </button>
                                                         <button class="btn btn-outline-danger" style="width: 40%" type="submit"><a href="#"
@@ -68,7 +80,7 @@
 
                     </div>
 
-                    <div class="col-md-3 sidebar pull-right">
+                    <div class="col-md-3 sports_sidebar pull-right">
 
                         <div>
 

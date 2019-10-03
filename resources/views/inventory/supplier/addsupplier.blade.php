@@ -1,7 +1,6 @@
-@extends('includes.layout')
+@extends('layout')
 @section('content')
     <div class="container" style="width: auto;margin-top: 20px">
-        @include('messages.message')
         <div class="text-center">
             <h2 class="display-5 text-center ">
                 <strong>Enter The Supplier Details</strong>
@@ -25,7 +24,8 @@
             </div>
             <div class="form-group form-row">
                 {!! Form::Label('item', 'Contact Details',['class'=>'text1']) !!}
-                {{Form::number('contact','',['class'=>'form-control text1','placeholder'=>'Contact Details'])}}
+                {{--{{Form::number('contact','',['class'=>'form-control text1','maxlength'=>'9','placeholder'=>'Contact Details'])}}--}}
+                <input name="contact" id="item" type="number" max="0799999999" class="form-control text1" placeholder="Contact Details">
             </div>
             <div class="form-group form-row">
                 <div>
@@ -42,9 +42,17 @@
                 {{Form::submit('Submit',['class'=>'btn btn-primary'])}}
             </div>
             {!! Form::close() !!}
-            <div style="margin-top: 30px;">
-                <a href="/index" class="btn btn-primary text1">Admin Dashboard</a>
-                <a href="/supplier" class="btn btn-primary text1">Suppliers</a>
+
+            {{--<div class="container" style="width: 50%">--}}
+                {{--<form action="{{action('Suppliercontroller@store')}}" method="post" class="text1">--}}
+                    {{--<div class="form-group form-row">--}}
+                        {{----}}
+                    {{--</div>--}}
+                {{--</form>--}}
+            {{--</div>--}}
+            <div class="text-center" style="margin-top: 30px;">
+                <a href="/index" class="btn btn-outline-info text1">INVENTORY DASHBOARD</a>
+                <a href="/supplier" class="btn btn-outline-info text1">SUPPLIERS</a>
             </div>
         </div>
 

@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Society;
 use App\User;
+use App\SocietyUser;
+use Faker\Provider\DateTime;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class SocietyController extends Controller
 {
@@ -19,7 +22,9 @@ class SocietyController extends Controller
 
     public function create()
     {
-       return view('society.create');
+        $teachers = User::where('role_id' , 2)->get();
+
+       return view('society.create')->with('teachers' , $teachers);
     }
 
     public function store(Request $request)
@@ -34,9 +39,6 @@ class SocietyController extends Controller
             'from' => 'required',
             'to' => 'required',
             'meetingsOn' => 'required',
-            'president' => 'required',
-            'secretary' => 'required',
-            'treasurer' => 'required',
             'image' => 'required',
 
         ]);
@@ -70,10 +72,6 @@ class SocietyController extends Controller
                 ->where('from','<=',$tod)
                 ->where('to', '>=' , $tod)
                 ->first();
-
-//            if($societyCheck1 || $societyCheck2 || $societyCheck3 || $societyCheck4)
-//            {
-//            }
 
             if($societyCheck1)
             {
@@ -116,16 +114,31 @@ class SocietyController extends Controller
         $society->from = request('from');
         $society->to = request('to');
         $society->image = $filenameToStore;
+        $society->email = request('email');
         $society->user_id = request('teacherInCharge');
         $society->mission = request('mission');
-        $society->president = request('president');
-        $society->secretary = request('secretary');
-        $society->treasurer = request('treasurer');
         $society->location = request('venue');
+        $society->role_id = 4;
         $society->meetingsOn = $newVal;
 
 
+        $user = new User();
+
+        $lastUser = DB::table('users')->orderBy('id', 'desc')->first();
+        $lastID = $lastUser->id;
+
+        $user->id = $lastID + 1;
+        $user->name = request('title');
+        $user->email = request('email');
+        $user->admin = 0 ;
+        $user->password = Hash::make(request('password'));
+        $user->role_id = 4 ;
+        $user->gender = "Society" ;
+        $user->birthday = now() ;
+
         $society->save();
+
+        $user->save();
 
         return redirect('/Society')->with('success', "New society '" . "{$society->title}" . "' has been created ");
 
@@ -144,11 +157,13 @@ class SocietyController extends Controller
     {
         $sp = Society::find($id);
 
+        $teachers = User::where('role_id' , 2)->get();
+
         $result = $sp->meetingsOn;
         $checkbox = explode(",", $result);
 
         if($sp){
-            return view('Society.edit')->with('society' , $sp)->with('checkbox' , $checkbox);
+            return view('Society.edit')->with('society' , $sp)->with('checkbox' , $checkbox)->with('teachers' , $teachers);
         }else{
             return back()->with('error','Could not find the society');
         }
@@ -157,7 +172,7 @@ class SocietyController extends Controller
 
     public function update(Request $request, $id)
     {
-//        dd($request);
+
 
         $this->validate(request(), [
             'title' => 'required',
@@ -167,16 +182,23 @@ class SocietyController extends Controller
             'from' => 'required',
             'meetingsOn' => 'required',
             'to' => 'required',
-            'president' => 'required',
-            'secretary' => 'required',
-            'treasurer' => 'required',
             'image' => 'required',
             'teacherInCharge' => 'required',
         ]);
 
+        $old_loc = $request->originalLocation;
+        $newLoc = $request->venue;
+        $oldFrom = $request->originalFrom;
+        $oldTo = $request->originalTo;
+        $newFrom = $request->from;
+        $newTo = $request->to;
 
 
-        if($request->has('venue'))
+        $from_old = mb_substr($oldFrom, 0, 5);
+        $to_old = mb_substr($oldTo, 0, 5);
+
+
+        if(! ($newLoc == $old_loc) and ($from_old==$newFrom) and ($to_old == $newTo))
         {
             $location = request('venue');
             $tod = request('to');
@@ -252,9 +274,6 @@ class SocietyController extends Controller
         $society->user_id = request('teacherInCharge');
         $society->image = $filenameToStore;
         $society->location = request('venue');
-        $society->president = request('president');
-        $society->secretary = request('secretary');
-        $society->treasurer = request('treasurer');
         $society->meetingsOn = $newVal;
 
 
@@ -262,7 +281,7 @@ class SocietyController extends Controller
 
         $societies = Society::all();
 
-        return view('society.index')->with('society',$society)->with('societies' , $societies)->with('success', "society '" . "{$society->title}" . "' has been updated ");
+        return redirect('/Society')->with('society',$society)->with('societies' , $societies)->with('success', "society '" . "{$society->title}" . "' has been updated ");
 
     }
 
@@ -276,12 +295,18 @@ class SocietyController extends Controller
     {
         $society = Society::find($id);
 
+
         if ($society) {
+
+            $user = User::where('email' , $society->email);
+
+            $user->delete();
+
             $society->delete();
-            return redirect('society.index')->with('success', "society '" . "{$society->title}" . "' has been deleted ");
+            return redirect('Society/index')->with('success', "society '" . "{$society->title}" . "' has been deleted ");
         }
 
-        return redirect('society')->with('error', "society was not deleted ");
+        return redirect('Society')->with('error', "society was not deleted ");
     }
 
     public function addStudent(request $request)
@@ -386,6 +411,37 @@ class SocietyController extends Controller
 
             return view('society/mysocieties')->with('societies', $societies)->with('success', "Showing societies of '" . "{$name}" . "' .");
         }
+
+    }
+
+    public function search()
+    {
+        $society = request('search');
+        $societies = Society::search($society)->paginate(3);
+
+        return view('society.index')->with('societies', $societies)->with('success', "Search Result for '" . "{$society}" . " '");
+    }
+
+    public function createDemo()
+    {
+
+        $society = new Society;
+
+        $society->title = "Astronomy Club";
+        $society->description = "Prepare a generation of young people for the challenges of the future is a task which forces us to rethink the school, not just for being difficult, but also because students feel that the school has very little to offer, especially something that interests them. Thus, the school is dysfunctional, is ill, and needs prompt treatment. School have to adjust to the new times, and this does not mean changing the old blackboards by advanced interactive whiteboards. The school has to find the way to the students with something that seduce them: the Challenge. The Astronomy Club that I lead in my school is essentially a Project space. Students who voluntarily joined the club, organize themselves according to their interests around projects whose outcome is not defined from the beginning, which requires them to do, undo and redo. Which obliges them to feel the need to ask for help to mathematics or physics to achieve answers, to feel the passion to study with a genuine purpose of learning. Some examples of the work: The younger students are challenged to reproduce the historical astronomical experiments that have opened the doors of knowledge such as the Eratosthenes experiment to determine the perimeter of the Earth (on equinox), or by using congruent triangles, determine the diameter the sun. These students are driven to establish distance scales in the solar system, which, to their astonishment, allows them to clear misconceptions that arise from some pictures of books and allows them to have a scientifically correct idea of the planetary orbit and distance separating the planets of the Solar System.";
+        $society->mission = "The primary goal of the Astronomy Club is to foster interest in amateur astronomy by developing and promoting programs for its membership, and the amateur community at large, in the areas of observational astronomy and electronic communications";
+        $society->location = "Auditorium";
+        $society->from = "08:00:00";
+        $society->to = "11:00:00";
+        $society->meetingsOn = "Monday,Wednesday";
+        $society->user_id =Auth()->user()->id;
+        $society->image = 0;
+
+        $result = $society->meetingsOn;
+        $checkbox = explode(",", $result);
+
+//                dd($society);
+        return view('society.demo')->with('society' , $society)->with('checkbox' , $checkbox);
 
     }
 }

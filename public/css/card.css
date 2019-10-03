@@ -284,34 +284,35 @@
     top: -32px;
 }
 .material-card.Red h2 {
-    background-color: #F44336;
+    background-color: #009147;
 }
 .material-card.Red h2:after {
-    border-top-color: #F44336;
-    border-right-color: #F44336;
+    border-top-color: #009147;
+    border-right-color: #009147;
     border-bottom-color: transparent;
     border-left-color: transparent;
 }
+
 .material-card.Red h2:before {
     border-top-color: transparent;
-    border-right-color: #B71C1C;
-    border-bottom-color: #B71C1C;
+    border-right-color: #009147;
+    border-bottom-color: #009147;
     border-left-color: transparent;
 }
 .material-card.Red.mc-active h2:before {
     border-top-color: transparent;
-    border-right-color: #F44336;
-    border-bottom-color: #F44336;
+    border-right-color: #009147;
+    border-bottom-color: #009147;
     border-left-color: transparent;
 }
 .material-card.Red.mc-active h2:after {
-    border-top-color: #B71C1C;
-    border-right-color: #B71C1C;
+    border-top-color: #009147;
+    border-right-color: #009147;
     border-bottom-color: transparent;
     border-left-color: transparent;
 }
 .material-card.Red .mc-btn-action {
-    background-color: #F44336;
+    background-color: #00152d;
 }
 .material-card.Red .mc-btn-action:hover {
     background-color: #B71C1C;
@@ -326,7 +327,7 @@
     background-color: #FFEBEE;
 }
 .material-card.Red.mc-active .mc-footer {
-    background-color: #FFCDD2;
+    background-color: #b3b3ff;
 }
 .material-card.Red.mc-active .mc-btn-action {
     border-color: #FFEBEE;

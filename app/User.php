@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password' , 'role_id',
+        'name', 'email', 'password' , 'role_id','gender', 'birthday'
     ];
 
     /**
@@ -40,6 +40,16 @@ class User extends Authenticatable
     public function societies()
     {
         return $this->belongsToMany(Society::class);
+    }
+
+    public function isAdmin()
+    {
+        if($this->admin)
+        {
+            return true;
+        }
+
+        return false;
     }
 
 

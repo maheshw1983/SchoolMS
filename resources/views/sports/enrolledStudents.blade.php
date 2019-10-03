@@ -10,7 +10,7 @@
     <div class="container-fluid">
         <div class="row container-fluid">
 
-            <div class="col-md-3" style="background-color: dimgrey">
+            <div class="col-md-3 sports_sidebar" >
                 <div style="padding-top: 20px">
                     @include('sports.sidebar');
                 </div>

@@ -2,14 +2,12 @@
 
 @section('content')
 
-    <div class="col-md-12">
+    <div class="row col-md-12">
 
 
 
         <div class="col-md-3">
-
-
-
+            @include('society.sidebar')
         </div>
 
         <div class="col-md-9">
@@ -21,10 +19,30 @@
                     <input type="Text" name="title" class="form-control" value="{{old('title')}}"
                            id="exampleInputPassword1" placeholder="Enter Title" >
                 </div>
+
+                {{--<div class="form-group">--}}
+                    {{--<label for="teacherInCharge"><h6>Teacher In Charge (ID)</h6> </label>--}}
+                    {{--<input type="Text" name="teacherInCharge" class="form-control" id="exampleInputPassword1"--}}
+                           {{--placeholder="Enter Title" value= required>--}}
+                {{--</div>--}}
+                {{--@if($teachers)--}}
+                {{--@foreach($teachers as $teach)--}}
+                    {{--<p>{{$teach->name}}</p>--}}
+                {{--@endforeach--}}
+                {{--@endif--}}
                 <div class="form-group">
-                    <label for="teacherInCharge"><h6>Teacher In Charge (ID)</h6> </label>
-                    <input type="Text" name="teacherInCharge" class="form-control" id="exampleInputPassword1"
-                           placeholder="Enter Title" value="{{old('teacherInCharge')}}" required>
+                    <label for="venue"><h6>Teacher In Charge</h6></label>
+                    <input class="form-control col-6" name="teacherInCharge" type="Text" value="{{old('teacherInCharge')}}" list="teachers" placeholder="Select Teacher in Charge"  required/>
+                    <datalist id="teachers">
+                        {{--<option value="School Main Hall">School Main Hall</option>--}}
+                        {{--<option value="School Grounds">School Grounds</option>--}}
+                        {{--<option value="Auditorium">Auditorium</option>--}}
+                        @if($teachers)
+                        @foreach($teachers as $teach)
+                        <option value="{{$teach->id}}"> Teacher Name is {{$teach->name}}</option>
+                        @endforeach
+                        @endif
+                    </datalist>
                 </div>
                 <div class="form-group">
                     <label for="detailedDescription"><h6>Description</h6></label>
@@ -99,26 +117,30 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="exampleInputPassword1"><h6>President</h6></label>
-                    <input type="Text" name="president" class="form-control" value="{{old('president')}}"
-                           id="exampleInputPassword1" placeholder="Enter Title" required>
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1"><h6>Secretary</h6></label>
-                    <input type="Text" name="secretary" class="form-control" value="{{old('secretary')}}"
-                           id="exampleInputPassword1" placeholder="Enter Title" required >
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1"><h6>Treasurer</h6></label>
-                    <input type="Text" name="treasurer" class="form-control" value="{{old('treasurer')}}"
-                           id="exampleInputPassword1" placeholder="Enter Title" required >
-                </div>
                 <br>
                 <div class="col-md-12 float-left"  style="padding-bottom:3%;padding-top:1%">
                     <input type="file" name="image" value="{{old('image')}}" class="btn btn-outline-dark" required>
                     {{--<p class="text-warning">*Encouraged to enter a gif (Live Image)</p>--}}
                 </div>
+                <br>
+                <br>
+                <br>
+                <hr>
+
+                <h3>Login Information</h3>
+                <hr>
+
+                <div class="form-group">
+                    <label for="exampleInputPassword1"><h6>Email</h6></label>
+                    <input type="Text" name="email" class="form-control" value="@wcc.com"
+                           id="exampleInputPassword1" required>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1"><h6>Password</h6></label>
+                    <input type="password" name="password" class="form-control"
+                           id="exampleInputPassword1" placeholder="Enter password" required >
+                </div>
+
                 <div class="btn-block" style="padding-bottom:3%;padding-top:3%">
                     <button type="Submit" class="btn btn-primary btn-block" style="padding: 1%">Submit
                     </button>

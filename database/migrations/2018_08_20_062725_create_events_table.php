@@ -19,16 +19,12 @@ class CreateEventsTable extends Migration
             $table->longText('description');
             $table->longText('detailed_description');
             $table->string('venue');
-//            $table->date('on');
             $table->dateTime('from_date');
             $table->dateTime('to_date');
             $table->string('from_grade');
             $table->string('to_grade');
-            $table->integer('society_id')->unsigned();
             $table->integer('user_id')->unsigned(); //Teacher in Charge
             $table->string('image')->default('default.png');
-//            $table->double('budg_income');
-//            $table->double('budg_expense');
             $table->double('act_income');
             $table->double('act_expense');
             $table->timestamps();

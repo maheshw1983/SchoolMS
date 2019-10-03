@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="row container-fluid">
 
-            <div class="col-md-3" style="background-color:dimgrey">
+            <div class="col-md-3 sports_sidebar" >
                 <div style="padding-top: 20px">
                     @include('sports.sidebar');
                 </div>
@@ -38,25 +38,20 @@
                             <label for="detailedDescription"><h6>Description</h6></label>
                             <textarea rows="10" type="Text" class="form-control" value="{{$sport->description}}"
                                       name="detailed_Description" aria-describedby="emailHelp"
-                                      placeholder="A proper explanation about the Sport" required></textarea>
+                                      placeholder="A proper explanation about the Sport" required>{{$sport->description}}</textarea>
                         </div>
 
-                        <div class="form-group">
-                            <label for="venue"><h6>Practice Location</h6></label>
+                        {{--<div class="form-group">--}}
+                            {{--<label for="venue"><h6>Practice Location</h6></label>--}}
                             {{--<input type="Text" class="form-control" name="venue" value="{{$sport->venue}}"--}}
                                    {{--id="exampleInputPassword1" placeholder="Enter Practicing Location" required>--}}
-                            <input class="form-control" name="venue" type="Text" value="{{$sport->venue}}" list="locations" placeholder="Select or Type Your Location" required/>
-                            <datalist id="locations">
-                                <option value="School Main Hall">School Main Hall</option>
-                                <option value="School Grounds">School Grounds</option>
-                                <option value="Auditorium">Auditorium</option>
-                                {{--@if($locations)--}}
-                                {{--@foreach($locations as $Location)--}}
-                                {{--<option value="{{$Location}}">{{$Location}}</option>--}}
-                                {{--@endforeach--}}
-                                {{--@endif--}}
-                            </datalist>
-                        </div>
+                            {{--<input class="form-control" name="venue" type="Text" value="{{$sport->location}}" list="locations" placeholder="Select or Type Your Location" required/>--}}
+                            {{--<datalist id="locations">--}}
+                                {{--<option value="School Main Hall">School Main Hall</option>--}}
+                                {{--<option value="School Grounds">School Grounds</option>--}}
+                                {{--<option value="Auditorium">Auditorium</option>--}}
+                            {{--</datalist>--}}
+                        {{--</div>--}}
 
                         <div class="form-group col-md-7" style="padding-bottom:3%;padding-top:3%">
                             <div class="col-md-6 float-left">
@@ -66,13 +61,19 @@
                                        aria-describedby="emailHelp"
                                        placeholder="Lowest Grade that is permitted to participate" required>
                             </div>
+
+
+
                             <div class="col-md-6 float-left">
                                 <label for="toGrade"><h6>To (Grade)</h6></label>
                                 <input type="Number" class="form-control" name="to_grade" value="{{$sport->to_grade}}"
                                        aria-describedby="emailHelp"
                                        placeholder="Highest Grade that is permitted to participate" required>
                             </div>
+
+
                         </div>
+
                         <div class="form-group col-md-7" style="padding-top:5%">
                             <div class="col-md-12">
                                 <label for="teacherInCharge" ><h6>Gender :&nbsp </h6></label>

@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="row container-fluid">
 
-            <div class="col-md-3" style="background-color:dimgrey">
+            <div class="col-md-3 sports_sidebar" >
                 <div style="padding-top: 20px">
                     @include('sports.sidebar');
                 </div>
@@ -26,10 +26,27 @@
                         <input type="Text" name="title" class="form-control" value="{{old('title')}}"
                                id="exampleInputPassword1" placeholder="Enter Title" >
                     </div>
+                    {{--<div class="form-group">--}}
+                        {{--<label for="teacherInCharge"><h6>Teacher In Charge (ID)</h6> </label>--}}
+                        {{--<input type="Text" name="teacherInCharge" class="form-control" id="exampleInputPassword1"--}}
+                               {{--placeholder="Enter Title" value="{{old('teacherInCharge')}}" required>--}}
+                    {{--</div>--}}
                     <div class="form-group">
-                        <label for="teacherInCharge"><h6>Teacher In Charge (ID)</h6> </label>
-                        <input type="Text" name="teacherInCharge" class="form-control" id="exampleInputPassword1"
-                               placeholder="Enter Title" value="{{old('teacherInCharge')}}" required>
+                        <label for="venue"><h6>Teacher In Charge</h6></label>
+                        <input class="form-control col-6" name="teacherInCharge" type="Text" value="{{old('teacherInCharge')}}" list="teachers" placeholder="Select Teacher in Charge"  required/>
+                        <datalist id="teachers">
+<<<<<<< HEAD
+=======
+                            {{--<option value="School Main Hall">School Main Hall</option>--}}
+                            {{--<option value="School Grounds">School Grounds</option>--}}
+                            {{--<option value="Auditorium">Auditorium</option>--}}
+>>>>>>> 2850006995c7d8a29a95ca683106bb7d7dd90ec4
+                            @if($teachers)
+                                @foreach($teachers as $teach)
+                                    <option value="{{$teach->id}}"> Teacher Name is {{$teach->name}}</option>
+                                @endforeach
+                            @endif
+                        </datalist>
                     </div>
                     <div class="form-group">
                         <label for="detailedDescription"><h6>Description</h6></label>
@@ -47,11 +64,6 @@
                             <option value="School Main Hall">School Main Hall</option>
                             <option value="School Grounds">School Grounds</option>
                             <option value="Auditorium">Auditorium</option>
-                            {{--@if($locations)--}}
-                            {{--@foreach($locations as $Location)--}}
-                            {{--<option value="{{$Location}}">{{$Location}}</option>--}}
-                            {{--@endforeach--}}
-                            {{--@endif--}}
                         </datalist>
                     </div>
 

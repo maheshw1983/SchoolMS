@@ -7,7 +7,7 @@ use App\Orders;
 use App\suppliers;
 use App\stationary;
 use App\labs;
-use App\sports;
+use App\InventorySports;
 use App\Resources;
 use DB;
 
@@ -22,12 +22,11 @@ class homeview extends Controller
         $items = stationary::all()->count();
         $pending = Orders::all()->count();
         $labs = labs::all()->count();
-        $sports = sports::all()->count();
+        $sports = InventorySports::all()->count();
         $resources = Resources::all()->count();
 
-
         return view('inventory.home.inventory')->with('data', ['pending' => $pending, 'items' => $items, 'labs' => $labs,
-            'sports' => $sports, 'resources' => $resources]);
+                                                'sports' => $sports, 'resources' => $resources]);
 
     }
 

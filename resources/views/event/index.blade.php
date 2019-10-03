@@ -12,7 +12,7 @@
                     <div class="col-md-9">
                         @if(count($events)>0)
                             @foreach( $events as $event )
-                                <div class="col-md-12 row jumbotron" style="background-color: lightgray">
+                                <div class="col-md-12 row jumbotron" style="background-color: lightgray; ">
                                     <div class="col-md-8">
                                         <div>
                                             <h2>
@@ -29,8 +29,22 @@
                                                    href="{{action('EventController@show',[$event->id])}}">View Event
                                                     in Detail</a>
                                             </p>
+
+
+
+                                            <?php
+//                                            $socid = $event->society()->first();
+//                                            $soc = \App\User::where('email' , $socid->email)->get();
+
+                                            $socid = \App\Society::where('id' , $event->society_id)->first();
+//                                            dd($event->society_id);
+                                            $user = \App\User::where('email' , $socid->email)->first();
+//                                            dd( $socid->email);
+                                            ?>
+
                                             @if(auth()->user())
-                                                @if(auth()->user()->id == $event->user_id)
+{{--                                                @if(auth()->user()->id == $event->user_id ||  auth()->user()->id == $user->id )--}}
+                                                    @if(auth()->user()->id == $event->user_id)
                                                     <div class="btn-group-lg col-12">
                                                         <button class="btn btn-outline-dark "
                                                                 style="width: 40%; border-radius: 50%" type="submit"><a
@@ -79,7 +93,7 @@
 
                     </div>
 
-                    <div class="col-md-3 sidebar pull-right">
+                    <div class="col-md-3 sports_sidebar pull-right">
 
                         <div>
 

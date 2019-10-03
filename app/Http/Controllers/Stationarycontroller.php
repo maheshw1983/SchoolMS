@@ -157,7 +157,7 @@ class Stationarycontroller extends Controller
         $user = Auth::user()->role_id;
         $labs = stationary::find($id);
         if($user == 1){
-            $labs->delete();
+            DB::table('stationaries')->where('productID','=',$id)->delete();
             return back()->with('success','Record was deleted successfully');
         }
         else{

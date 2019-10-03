@@ -9,27 +9,12 @@
     <script src="{{asset('/js/card.js')}}"></script>
 
 
-    <div>
-        <div class="row">
-            <div class="col-md-12">
-{{--                <img src="{{asset('images/sports1.jpg')}}" style="width: 100%; max-height:350px ">--}}
-
-                <hr>
-
-            </div>
-        </div>
-    </div>
     <div class="container-fluid">
         <div class="row container-fluid">
 
-            <div class="col-md-3" style="background-color: dimgrey">
-                <div style="padding-top: 20px">
-                    @if(auth()->user())
-                        @if(auth()->user()->role_id == 1)
-                            @include('sports.adminsidebar');
-                        @endif
-                    @endif
+            <div class="col-md-3 rounded sports_sidebar" >
 
+                <div style="padding-top: 20px">
                     @include('sports.sidebar');
                 </div>
 
@@ -53,7 +38,8 @@
                                                 <span>{{$sport->title}}</span>
                                                 <strong>
                                                 <i class="fa fa-fw fa-star"></i>
-                                                The Deer Hunter
+                                                {{--The Deer Hunter--}}
+                                                    Eligible for students from Grade {{$sport->from_grade}} to {{$sport->to_grade}}
                                                 </strong>
                                             </h2>
                                             <div class="mc-content">

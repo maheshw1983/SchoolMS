@@ -1,16 +1,34 @@
+@if(Auth()->user())
+    <div class="btn-block" style="padding-top: 15px">
+        <button class="btn btn-warning " style="width:100%; min-height:60px;"><a
+                    href="/Sport/createDemo" style="color: red">Demo to Add a Sport</a></button>
 
-@if(auth()->user())
-    @if(auth()->user()->role_id == 1)
-        @include('sports.adminsidebar');
-    @endif
-    @if(Auth()->user()->role_id == 2)
-        <div class="btn-block" style="padding-top: 15px">
-            <button class="btn btn-outline-success" style="width: 100%; min-height: 60px ; "><a href="/Sport/mysports" style="color: whitesmoke">
-                    My Sports</a></button>
-        </div>
-        <br>
-    @endif
+    </div>
 @endif
+
+<div class="row" style="margin: 1%; margin-bottom: 3%">
+    <form action="/Sport/search" method="get">
+
+        <input type="search" class="form-control pull-left searchHov" name="search" placeholder="Search Sports" style="margin-top: 10px">
+
+    </form>
+</div>
+
+<div>
+    @if(auth()->user())
+        @if(auth()->user()->role_id == 1)
+            @include('sports.adminsidebar');
+        @endif
+        @if(Auth()->user()->role_id == 2)
+            <div class="btn-block" style="padding-top: 15px">
+                <button class="btn btn-success" style="width: 100%; min-height: 60px ; "><a href="/Sport/mysports" style="color: whitesmoke">
+                        My Sports</a></button>
+            </div>
+            <br>
+        @endif
+    @endif
+</div>
+
 
 <div class="sidebar left container-fluid " style="width: 100%">
 

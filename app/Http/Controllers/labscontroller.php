@@ -26,8 +26,9 @@ class labscontroller extends Controller
     public function index()
     {
         $labs = labs::all();
-        $orders = Orders::where('type','=','Sports Items')->count();
-        $stitems = DB::table('sports')->where('amount','=',labs::min('amount'))->pluck('name');
+        $orders = Orders::where('type','=','Laboratory Equipments')->count();
+        $stitems = DB::table('labs')->where('amount','=',labs::min('amount'))->pluck('name');
+
 
         return view('inventory.labs.labs')->with('labs', $labs)->with('orders',$orders)->with('st',$stitems);
     }
@@ -41,7 +42,7 @@ class labscontroller extends Controller
     {
         $user = Auth::user()->role_id;
         if ($user == 1) {
-            $supplier = suppliers::where('type', '=', 'L')->get();
+            $supplier = DB::table('suppliers')->where('type','=','L')->pluck('supplierID');
             return view('inventory.labs.addlabs')->with('suppliers', $supplier);
         } else {
             return redirect()->back()->with('error', 'You do not have rights to perform this action');
@@ -109,14 +110,15 @@ class labscontroller extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function edit($id)
     {
         $user = Auth::user()->role_id;
         $labs = labs::find($id);
+        $supplier = DB::table('suppliers')->where('type','=','L')->pluck('supplierID');
         if ($user == 1) {
-            return view('inventory.labs.editlabs')->with('labs', $labs);
+            return view('inventory.labs.editlabs')->with('labs', $labs)->with('suppliers',$supplier);
         } else {
             return redirect()->back()->with('error', 'You do not have rights to perform this action');
         }
@@ -155,7 +157,7 @@ class labscontroller extends Controller
             }
         }
         else{
-            return redirect()->back()->with('error','Enter the correct qunatity');
+            return redirect()->back()->with('error','Enter the correct quantity');
         }
 
 
@@ -168,14 +170,13 @@ class labscontroller extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        $user = Auth::user()->role_id;
+    { $user = Auth::user()->role_id;
         $labs = labs::find($id);
         if ($user == 1) {
-            $labs->delete();
+            DB::table('labs')->where('productID','=',$id)->delete();
             return redirect()->back()->with('success', 'Record was deleted successfully');
         } else {
-            return redirect()->back()->with('error', 'You do not rightd to perform this action');
+            return redirect()->back()->with('error', 'You can not perform this action');
         }
     }
 }

@@ -1,7 +1,6 @@
-@extends('includes.layout')
+@extends('layout')
 @section('content')
     <div class="container" style="width: auto;margin-top: 20px">
-        @include('messages.message')
         <div class="text-center">
             <h2 class="display-5 text-center ">
                 <strong>Enter The Supplier Details</strong>
@@ -25,7 +24,7 @@
             </div>
             <div class="form-group form-row">
                 {!! Form::Label('item', 'Contact Details :-',['class'=>'text1']) !!}
-                {{Form::number('contact',$supplier->contact_details,['class'=>'form-control text1','placeholder'=>'Contact Details'])}}
+                {{Form::number('contact',$supplier->contact_details,['class'=>'form-control text1','max'=>'0799999999','placeholder'=>'Contact Details'])}}
             </div>
             <div class="form-group form-row">
                 <div>

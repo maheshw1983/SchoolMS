@@ -1,14 +1,13 @@
-@extends('includes.layout')
+@extends('layout')
 @section('content')
     <div class="container" style="width: auto;margin-top: 20px">
-        @include('messages.message')
         <div class="text-center">
             <h2 class="display-5 text-center ">
                 <strong>Enter The Expenses</strong>
             </h2>
         </div>
         <div class="container" style="width: 50%;">
-            {!! Form::open(['action' => ['Expensescontroller@update',$expenses->invoiceID],'method' => 'POST', 'class'=> 'form-signin text-center']) !!}
+            {!! Form::open(['action' => ['Inventoryexpenses@update',$expenses->invoiceID],'method' => 'POST', 'class'=> 'form-signin text-center']) !!}
             <input name="_method" type="hidden" value="PATCH">
 
             <div class="form-group form-row">
@@ -55,8 +54,8 @@
             {{Form::submit('Submit',['class'=>'btn btn-primary'])}}
             {!! Form::close() !!}
             <div class="text-center" style="margin-top: 30px">
-                <a href="/index" class="btn btn-primary text1">Admin Dashboard</a>
-                <a href="/expenses" class="btn btn-primary text1">Expenses</a>
+                <a href="/inventory" class="btn btn-outline-info text1">Admin Dashboard</a>
+                <a href="/expenses" class="btn btn-outline-info text1">Expenses</a>
             </div>
         </div>
 

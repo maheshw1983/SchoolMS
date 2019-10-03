@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="col-md-12">
+    <div class="col-md-12 row">
         <div class="col-md-3">
             @include('society.sidebar')
         </div>
@@ -20,21 +20,30 @@
                            id="exampleInputPassword1" placeholder="Enter Title" >
                 </div>
                 <div class="form-group">
-                    <label for="teacherInCharge"><h6>Teacher In Charge (ID)</h6> </label>
-                    <input type="Text" name="teacherInCharge" class="form-control" id="exampleInputPassword1"
-                           placeholder="Enter Title" value="{{$society->user_id}}" required>
+                    <label for="venue"><h6>Teacher In Charge</h6></label>
+                    <input class="form-control" name="teacherInCharge" type="Text" value="{{old('teacherInCharge')}}" list="teachers" placeholder="Select Teacher in Charge"  required/>
+                    <datalist id="teachers">
+                        {{--<option value="School Main Hall">School Main Hall</option>--}}
+                        {{--<option value="School Grounds">School Grounds</option>--}}
+                        {{--<option value="Auditorium">Auditorium</option>--}}
+                        @if($teachers)
+                            @foreach($teachers as $teach)
+                                <option value="{{$teach->id}}"> Teacher Name is {{$teach->name}}</option>
+                            @endforeach
+                        @endif
+                    </datalist>
                 </div>
                 <div class="form-group">
                     <label for="detailedDescription"><h6>Description</h6></label>
                     <textarea rows="10" type="Text" class="form-control" value="{{$society->description}}}"
                               name="description" aria-describedby="emailHelp"
-                              placeholder="A proper explanation about the Society" required></textarea>
+                              placeholder="A proper explanation about the Society" required>{{$society->description}}}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="detailedDescription"><h6>Mission and Vision</h6></label>
                     <textarea rows="4" type="Text" class="form-control" value="{{$society->mission}}"
                               name="mission" aria-describedby="emailHelp"
-                              placeholder="Vision and Mission of the society" required></textarea>
+                              placeholder="Vision and Mission of the society" required>{{$society->mission}}</textarea>
                 </div>
 
                 <div class="form-group">
@@ -44,11 +53,6 @@
                         <option value="School Main Hall">School Main Hall</option>
                         <option value="School Grounds">School Grounds</option>
                         <option value="Auditorium">Auditorium</option>
-                        {{--@if($locations)--}}
-                        {{--@foreach($locations as $Location)--}}
-                        {{--<option value="{{$Location}}">{{$Location}}</option>--}}
-                        {{--@endforeach--}}
-                        {{--@endif--}}
                     </datalist>
                 </div>
 
@@ -65,6 +69,11 @@
                                placeholder="End time of the meeting" required>
                     </div>
                 </div>
+
+
+                <input value="{{$society->from}}" type="hidden" name="originalFrom">
+                <input value="{{$society->to}}" type="hidden" name="originalTo" >
+                <input value="{{$society->location}}" type="hidden" name="originalLocation">
 
                 <br>
                 <br>
@@ -95,22 +104,6 @@
 
                         <button class="btn" type="reset" style="border-radius: 50%">Uncheck All Days</button>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="exampleInputPassword1"><h6>President</h6></label>
-                    <input type="Text" name="president" class="form-control" value="{{$society->president}}"
-                           id="exampleInputPassword1" placeholder="Enter Title" required>
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1"><h6>Secretary</h6></label>
-                    <input type="Text" name="secretary" class="form-control" value="{{$society->secretary}}"
-                           id="exampleInputPassword1" placeholder="Enter Title" required >
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1"><h6>Treasurer</h6></label>
-                    <input type="Text" name="treasurer" class="form-control" value="{{$society->treasurer}}"
-                           id="exampleInputPassword1" placeholder="Enter Title" required >
                 </div>
                 <br>
                 <div class="col-md-12 float-left"  style="padding-bottom:3%;padding-top:1%">

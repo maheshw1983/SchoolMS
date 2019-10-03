@@ -162,10 +162,15 @@
                             <br>
                         </div>
 
+                        <input value="{{$finalfrom}}" type="hidden" name="originalFrom">
+                        <input value="{{$finalto}}" type="hidden" name="originalTo" >
+                        <input value="{{$event->venue}}" type="hidden" name="originalLocation">
+
+
                     </form>
                 @endif
             </div>
-            <div class="col-md-3 sideb">
+            <div class="col-md-3 sports_sidebar">
 
                 @include('include.sidebar')
             </div>

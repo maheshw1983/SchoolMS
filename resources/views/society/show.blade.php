@@ -4,27 +4,29 @@
 
 
     <div class=" row col-12">
-        <div class="col-3">
+        <div class="col-3  ">
 
             @if(Auth()->user())
-                @if(Auth()->user()->id == $society->user_id){{-- If the user is a teacher only they can check enrolled students --}}
-                <div class="row" style="background-color: #a8a8a8;padding:3%;margin:1%">
-                    <div class="col-lg-12" style="margin:2%">
-                        <form id="add-user"
-                              action="{{action('SocietyController@enrolledStudents')}}">
-                            <div class="input-group">
-                                {{csrf_field()}}
-                                <input type="submit" class="btn btn-primary"
-                                       value="Students enrolled for {{$society->title}}"
-                                       name="user_id">
-                                <input value="{{$society->id}}" type="hidden" name="society_id">
-                                <input value="{{Auth()->user()->id}}" type="hidden" name="user_id">
-                            </div>
-                        </form>
+                @if($society)
+                    @if(Auth()->user()->id == $society->user_id){{-- If the user is a teacher only they can check enrolled students --}}
+                    <div class="col-md-12 rounded row sports_sidebar" style="padding:3%;margin:1%">
+                        <div class="col-lg-12" style="margin:2%">
+                            <form id="add-user"
+                                  action="{{action('SocietyController@enrolledStudents')}}">
+                                <div class="input-group">
+                                    {{csrf_field()}}
+                                    <input type="submit" class="btn btn-primary col-12 "
+                                           value="Students enrolled for {{$society->title}}"
+                                           name="user_id">
+                                    <input value="{{$society->id}}" type="hidden" name="society_id">
+                                    <input value="{{Auth()->user()->id}}" type="hidden" name="user_id">
+                                </div>
+                            </form>
 
+                        </div>
                     </div>
-                </div>
-                {{--@endif--}}
+                    {{--@endif--}}
+                    @endif
                 @endif
             @endif
 
@@ -33,7 +35,7 @@
 
         <?php
         //To check whether the Student is already enrollef
-        if (Auth()->user()) {
+        if (Auth()->user() && $society ) {
             $thisUser = \Illuminate\Support\Facades\Auth::user()->id;
             $thisSociety = \App\Society::find($society->id);
             $userExist = \Illuminate\Support\Facades\DB::table('society_user')
@@ -44,7 +46,7 @@
 
         ?>
 
-        <div class="col-md-9 rounded" style="background-color: #d0d0d0; padding:2%;">
+        <div class="col-md-9 rounded " style="background-color: #d0d0d0; padding:2%;">
             @if($society)
                 <div class="row">
                     <div class="col-12 rounded card-header text-uppercase text-lg-center"><h1
@@ -64,7 +66,7 @@
 
                             <div class="col-12">
                                 @if(Auth()->user())
-                                    @if(Auth()->user()->role_id == 2 )
+                                    @if(Auth()->user()->role_id == 3 )
                                         @if($userExist)
                                             <div class="col-md-12" style="margin:2%">
                                                 <form id="add-user"
@@ -137,37 +139,7 @@
                 </div>
                 <div class="row col-12">
                     @if(Auth()->user())
-                        @if($userExist || Auth()->user()->role_id == 2 )
-                            <div class="row col-12" style="margin:1%;">
-                                <div class="row col-12">
-                                    <div class="card-header col-4 rounded text-white"
-                                         style="background-color: dimgrey; width: 100%">
-                                        <div class="mol-12">President</div>
-                                    </div>
-                                    <div class="card-header col-4 rounded text-white"
-                                         style="background-color: dimgrey; width: 100%">
-                                        Secretary
-                                    </div>
-                                    <div class="card-header col-4 rounded text-white"
-                                         style="background-color: dimgrey; width: 100%">
-                                        Treasurer
-                                    </div>
-                                </div>
-                                <div class="row col-12">
-                                    <div class="card-header col-4 rounded text-white"
-                                         style="background-color: #a6a6a6; width: 100%">
-                                        {{$society->president}}
-                                    </div>
-                                    <div class="card-header col-4 rounded text-white"
-                                         style="background-color: #a6a6a6; width: 100%">
-                                        {{$society->secretary}}
-                                    </div>
-                                    <div class="card-header col-4 rounded text-white"
-                                         style="background-color: #a6a6a6; width: 100%">
-                                        {{$society->treasurer}}
-                                    </div>
-                                </div>
-                            </div>
+                        @if($userExist || Auth()->user()->role_id == 2)
                             <div class="col-md-12" style="margin:2%">
                                 <div class="row">
                                     <div class="card-header col-3 rounded text-white" style="background-color: dimgrey">
@@ -189,17 +161,6 @@
                                         {{$society->description}}
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="card-header col-3 rounded text-white" style="background-color: dimgrey">
-
-                                    </div>
-                                    <div class="row col-9 rounded"
-                                         style="background-color: #a9a9a9; padding: 2%; color: whitesmoke">
-
-                                    </div>
-                                </div>
-
-
                             </div>
                         @endif
                     @endif

@@ -39,7 +39,7 @@
 
             <div class="row container-fluid">
 
-                <div class="col-md-3" style="background-color: dimgrey">
+                <div class="col-md-3 sports_sidebar" >
                     @if(Auth()->user())
                         @if(Auth()->user()->role_id == 3){{-- If the user is a student only they can enroll so role_id=3 --}}
                         @if($userExist) {{--If user is already Enrolled --}}
@@ -93,7 +93,7 @@
                                         {{csrf_field()}}
                                         <input type="submit" class="btn btn-success col-10"
                                                value="Students enrolled for {{$sport->title}}"
-                                               name="user_id" placeholder="Enter Student ID">
+                                               name="user_id">
                                         <input value="{{$sport->id}}" type="hidden" name="sport_id">
                                         <input value="{{Auth()->user()->id}}" type="hidden" name="user_id">
                                     </div>
@@ -107,7 +107,7 @@
                         <div style="padding-top: 20px">
                             @if(auth()->user())
                                 @if(auth()->user()->role_id == 1)
-                                    @include('sports.adminsidebar');
+                                    {{--@include('sports.adminsidebar');--}}
                                 @endif
                             @endif
 
@@ -203,8 +203,8 @@
                                                     <img src="/storage/img/{{$sport->image}}"
                                                          style="width: 250px; height: 200px">
                                                     <div style="margin: 5%">
-                                                        <h4 class="card-header">About {{$sport->title}}</h4>
-                                                        <div class="card-body" style="font-family: 'Hobo Std'">
+                                                        <h4 class="card-header" style="font-family: 'Hobo Std'; background-color:#a8a8a8">About {{$sport->title}}</h4>
+                                                        <div class="card-body" style="font-family: 'Hobo Std'; background-color:lightgrey">
                                                             {{$sport->description}}
                                                         </div>
                                                     </div>

@@ -32,14 +32,25 @@
 
     {{--Madhatter Full Callendar--}}
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+
+
+
+
+
+
+
 
     <style>
         body {
-            background-image: url("{{asset('images/bg.jpg')}}");
+{{--            background-image: url("{{asset('images/bg1.jpg')}}");--}}
+                 background-color: #e8ffe6;
+
         }
 
         nav ul li a:hover {
@@ -61,25 +72,122 @@
             text-decoration: none;
             background-color: #343a40;
         }
+        .full-height {
+            height: 100vh;
+        }
 
+        .flex-center {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        .position-ref {
+            position: relative;
+        }
+
+        .top-right {
+            position: absolute;
+            right: 10px;
+            top: 18px;
+        }
+
+        .content {
+            text-align: center;
+        }
+
+        .title {
+            font-size: 84px;
+        }
+
+        .links > a {
+            color: #636b6f;
+            padding: 0 25px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .m-b-md {
+            margin-bottom: 30px;
+        }
+
+        .text1 {
+            font-size: medium;
+            font-family: "Comic Sans MS";
+            color: black;
+        }
+
+        .card1 {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            background-color: #9d9d9d;
+            width: auto;
+            height: 380px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .card1:hover {
+            /*box-shadow: 0 32px 16px 0 rgba(0,0,0,0.2);*/
+            box-shadow: 10px 10px black;
+        }
+
+        .image {
+            height: 200px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+
+            width: 50%;
+            border-radius: 4px;
+            padding: 5px;
+        }
+
+        .imageholder {
+            padding-top: 25px;
+        }
+
+        .cardheader {
+            padding-top: 15px;
+            text-shadow: whitesmoke;
+            font-size: x-large;
+        }
+
+        .stockcard {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            background-color: darkgreen;
+            width: 250px;
+            height: 250px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stockcard:hover {
+            /*box-shadow: 0 32px 16px 0 rgba(0,0,0,0.2);*/
+            box-shadow: 5px 5px black;
+        }
 
     </style>
 
 </head>
-<body>
+<body >
 
 <div>
     <div>
         @include('include.navbar')
     </div>
-    <div class="container alert">
+    <div class="container" style="padding: 1%">
         @include('include.error')
         @include('include.success')
     </div>
     <div style="margin: 15px">
         @yield('content')
     </div>
-    <div>
+    <div style="margin-top: 30px">
         @include('include.footer')
     </div>
 

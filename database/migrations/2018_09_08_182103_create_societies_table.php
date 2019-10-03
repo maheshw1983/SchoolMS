@@ -21,9 +21,6 @@ class CreateSocietiesTable extends Migration
             $table->time('from');
             $table->time('to');
             $table->string('location');
-            $table->string('president');
-            $table->string('secretary');
-            $table->string('treasurer');
             $table->timestamps();
         });
     }

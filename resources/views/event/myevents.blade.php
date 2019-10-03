@@ -9,7 +9,7 @@
 
                     <div class="col-md-9  pull-left">
                         <div class="card-header">
-                            <h1 class="text-center text-white text-warning">My Events</h1>
+                            <h1 class="text-center text-white">My Events</h1>
                         </div>
                         @if(count($events)>0)
                             @foreach( $events as $event )
@@ -27,7 +27,13 @@
                                                 <a class="btn btn-primary btn-large"
                                                    href="/Event/showEvent/{{$event->id}}">View Event in Detail</a>
                                             </p>
-                                            @if(auth()->user()->id == $event->user_id)
+
+                                            <?php
+                                                $socid = $event->society()->get();
+                                                $soc = \App\User::where('email' , $socid[0]->email)->get();
+                                            ?>
+
+                                            @if(auth()->user()->id == $event->user_id || auth()->user()->id == $soc[0]->id )
                                                 <div class="btn-group-lg">
                                                     <button class="btn btn-outline-dark " style="width: 40%" type="submit"><a href="{{ action('EventController@edit',[$event->id]) }}">Edit Event</a> </button>
                                                     <button class="btn btn-outline-danger" style="width: 40%" type="submit"><a href="#"
@@ -68,7 +74,7 @@
 
                     </div>
 
-                    <div class="col-md-3 sidebar pull-right">
+                    <div class="col-md-3 sports_sidebar pull-right">
 
                         <div>
 

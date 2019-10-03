@@ -19,7 +19,7 @@
                                id="exampleInputPassword1" placeholder="Enter Title" required>
                     </div>
                     <div class="form-group">
-                        <label for="teacherInCharge">Teacher ID </label>
+                        <label for="teacherInCharge">Society ID </label>
                         <input type="disabled" name="teacherInCharge" class="form-control" id="exampleInputPassword1"
                                placeholder="Enter Title" value="{{auth()->user()->id}}" disabled>
                     </div>
@@ -47,7 +47,7 @@
                         <label for="detailedDescription">Detailed Description</label>
                         <textarea rows="10" type="Text" class="form-control" value="{{old('detailed_Description')}}"
                                   name="detailed_Description" aria-describedby="emailHelp"
-                                  placeholder="Enter a Detailed Description" required></textarea></textarea>
+                                  placeholder="Enter a Detailed Description" required></textarea>
                     </div>
 
                     <?php
@@ -138,7 +138,8 @@
 
                 </form>
             </div>
-            <div class="col-md-3 sideb">
+            <div class="col-md-3 sports_sidebar">
+
 
                 @include('include.sidebar')
             </div>

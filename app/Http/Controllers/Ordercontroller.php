@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Orders;
 use App\labs;
 use App\Resources;
-use App\sports;
+use App\InventorySports;
 use App\stationary;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -26,8 +26,6 @@ class Ordercontroller extends Controller
     public function index()
     {
         $order = Orders::all();
-        $st = DB::table('stationaries')->where('name', '=', 'pencils')->pluck('name');
-
         return view('inventory.orders.viewOrders')->with('orders', $order);
 
     }
@@ -39,16 +37,19 @@ class Ordercontroller extends Controller
      */
     public function create()
     {
-        $id = Auth::user()->id;
+        $id = Auth::user()->role_id;
+        $labs = DB::table('labs')->where('amount', '>', 10)->pluck('name');
+        $st = DB::table('stationaries')->where('amount', '>', 10)->pluck('name');
+        $sports = DB::table('inventory_sports')->where('amount', '>', 10)->pluck('name');
+        $res = DB::table('resources')->where('amount', '>', 10)->pluck('name');
 
-        $data = array(
-            'labs' => DB::table('labs')->where('amount', '>', 10)->pluck('name'),
-            'st' => DB::table('stationaries')->where('amount', '>', 10)->pluck('name'),
-            'sports' => DB::table('sports')->where('amount', '>', 10)->pluck('name'),
-            'res' => DB::table('resources')->where('amount', '>', 10)->pluck('name')
-        );
         return view('inventory.orders.addorder')->with('id', $id)
-            ->with($data);
+            ->with('labs', $labs)
+            ->with('st', $st)
+            ->with('sports', $sports)
+            ->with('res', $res);
+
+
     }
 
     /**
@@ -59,6 +60,7 @@ class Ordercontroller extends Controller
      */
     public function store(Request $request)
     {
+
         $orders = new Orders;
         $orders->empid = $request->input('empID');
         $orders->items = $request->input('items');
@@ -71,19 +73,16 @@ class Ordercontroller extends Controller
 
         $st = DB::table('stationaries')->pluck('name');
         $res = DB::table('resources')->pluck('name');
-        $sp = DB::table('sports')->pluck('name');
+        $sp = DB::table('inventory_sports')->pluck('name');
         $lab = DB::table('labs')->pluck('name');
 
 
-        if($qty >0){
+        if ($qty > 0) {
             $orders->save();
-            return redirect()->back()->with('success','Order was placed successfully');
+            return redirect()->back()->with('success', 'Order was placed successfully');
+        } else {
+            return redirect()->back()->with('error', 'Enter the correct quantity');
         }
-        else{
-            return redirect()->back()->with('error','Order was not placed successfully');
-        }
-
-
 
 
     }
@@ -135,14 +134,14 @@ class Ordercontroller extends Controller
      */
     public function destroy($id)
     {
-//        $user = Auth::user()->id;
+        $user = Auth::user()->role_id;
         $empid = Orders::find($id);
-//        if ($user == $id) {
-        $empid->delete();
-        return redirect('/orders')->with('error', 'Record was deleted successfully');
-//        } else {
-//            return redirect()->back()->with('error', 'The order was not placed by you');
-//        }
+        if ($user == $empid->empid) {
+            DB::table('orders')->where('id', '=', $id)->delete();
+            return redirect('/orders')->with('error', 'Record was deleted successfully');
+        } else {
+            return redirect()->back()->with('error', 'The order was not placed by you');
+        }
 
     }
 

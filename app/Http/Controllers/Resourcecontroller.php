@@ -11,10 +11,10 @@ use Illuminate\Support\Facades\Auth;
 
 class Resourcecontroller extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth')->except('logout');
-    }
+//    public function __construct()
+//    {
+//        $this->middleware('auth')->except('logout');
+//    }
 
     /**
      * Display a listing of the resource.
@@ -24,8 +24,9 @@ class Resourcecontroller extends Controller
     public function index()
     {
         $resources = Resources::all();
-        $orders = Orders::where('type','=','Sports Items')->count();
+        $orders = Orders::where('type','=','Resources')->count();
         $stitems = DB::table('resources')->where('amount','=',Resources::min('amount'))->pluck('name');
+
 
         return view('inventory.resources.resources')->with('resources', $resources)->with('orders',$orders)->with('st',$stitems);
     }
@@ -164,7 +165,7 @@ class Resourcecontroller extends Controller
         $user = Auth::user()->role_id;
         $resources = Resources::find($id);
         if ($user == 1) {
-            $resources->delete();
+            DB::table('resources')->where('productID','=',$id)->delete();
             return back()->with('success', 'Record was deleted');
         } else {
             return redirect()->back()->with('error', 'You do not have permision to perform this action');

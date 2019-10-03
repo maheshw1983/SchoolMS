@@ -2,24 +2,16 @@
 
 @section('content')
 
-{{--    <link rel="stylesheet" href="{{asset('/css/ihover.css')}}">--}}
-{{--    <link rel="stylesheet" href="{{asset('/css/text_on_image.css')}}">--}}
+
     <link rel="stylesheet" href="{{asset('/css/card.css')}}">
     <link rel="stylesheet" href="{{asset('/css/sports_sidebar.css')}}">
     <script src="{{asset('/js/card.js')}}"></script>
 
 
-    <div>
-        {{--<div class="row">--}}
-            {{--<div class="col-md-12">--}}
-{{--                <img src="{{asset('images/sports1.jpg')}}" style="width: 100%; max-height:350px ">--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    </div>
     <div class="container-fluid">
         <div class="row container-fluid">
 
-            <div class="col-md-3" style="background-color: dimgrey">
+            <div class="col-md-3 sports_sidebar">
                 <div style="padding-top: 20px">
                     @if(auth()->user())
                         @if(auth()->user()->role_id == 1)
